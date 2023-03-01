@@ -19,25 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"fanmeiya.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="想写什么就什么">
-<meta property="og:type" content="website">
-<meta property="og:title" content="FMY&#39;s blogs">
-<meta property="og:url" content="http://fanmeiya.github.io/index.html">
+    <meta name="description" content="使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动构建词法分析器">
+<meta property="og:url" content="http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/index.html">
 <meta property="og:site_name" content="FMY&#39;s blogs">
-<meta property="og:description" content="想写什么就什么">
+<meta property="og:description" content="使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-01T08:49:30.000Z">
+<meta property="article:modified_time" content="2023-03-01T15:20:26.741Z">
 <meta property="article:author" content="FMY">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://fanmeiya.github.io/">
+<link rel="canonical" href="http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/","path":"2023/03/01/词法分析器/","title":"手动构建词法分析器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>FMY's blogs</title>
+<title>手动构建词法分析器 | FMY's blogs</title>
   
 
 
@@ -70,7 +73,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">FMY's blogs</h1>
+      <p class="site-title">FMY's blogs</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">归档</p>
@@ -97,7 +100,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
 	  <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -110,6 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%A1%AE%E5%AE%9AC%E8%AF%AD%E8%A8%80%E5%AD%90%E9%9B%86%E7%9A%84%E7%A7%8D%E5%88%AB%E7%A0%81%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">1、确定C语言子集的种别码表</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -152,16 +156,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -175,13 +180,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FMY's blogs">
+      <meta itemprop="name" content="手动构建词法分析器 | FMY's blogs">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" class="post-title-link" itemprop="url">手动构建词法分析器</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          手动构建词法分析器
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -228,16 +233,255 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+        <p>使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：</p>
+<span id="more"></span>
+
+<h3 id="1、确定C语言子集的种别码表"><a href="#1、确定C语言子集的种别码表" class="headerlink" title="1、确定C语言子集的种别码表"></a>1、确定C语言子集的种别码表</h3><p>种别码表的数据参考了网上资料，原网址是：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/unixfy/p/3242917.html">写一个简单的C词法分析器 - unixfy - 博客园 (cnblogs.com)</a></p>
+<table>
+<thead>
+<tr>
+<th align="center">单词符号</th>
+<th align="center">种别码</th>
+<th align="center">单词符号</th>
+<th align="center">种别码</th>
+<th align="center">单词符号</th>
+<th align="center">种别码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">while</td>
+<td align="center">1</td>
+<td align="center">-</td>
+<td align="center">30</td>
+<td align="center">||</td>
+<td align="center">59</td>
+</tr>
+<tr>
+<td align="center">break</td>
+<td align="center">2</td>
+<td align="center">–</td>
+<td align="center">31</td>
+<td align="center">|&#x3D;</td>
+<td align="center">60</td>
+</tr>
+<tr>
+<td align="center">case</td>
+<td align="center">3</td>
+<td align="center">-&#x3D;</td>
+<td align="center">32</td>
+<td align="center">~</td>
+<td align="center">61</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">4</td>
+<td align="center">-&gt;</td>
+<td align="center">33</td>
+<td align="center">+</td>
+<td align="center">62</td>
+</tr>
+<tr>
+<td align="center">const</td>
+<td align="center">5</td>
+<td align="center">!</td>
+<td align="center">34</td>
+<td align="center">++</td>
+<td align="center">63</td>
+</tr>
+<tr>
+<td align="center">continue</td>
+<td align="center">6</td>
+<td align="center">!&#x3D;</td>
+<td align="center">35</td>
+<td align="center">+&#x3D;</td>
+<td align="center">64</td>
+</tr>
+<tr>
+<td align="center">default</td>
+<td align="center">7</td>
+<td align="center">%</td>
+<td align="center">36</td>
+<td align="center">&lt;</td>
+<td align="center">65</td>
+</tr>
+<tr>
+<td align="center">do</td>
+<td align="center">8</td>
+<td align="center">%&#x3D;</td>
+<td align="center">37</td>
+<td align="center">&lt;&lt;</td>
+<td align="center">66</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">9</td>
+<td align="center">&amp;</td>
+<td align="center">38</td>
+<td align="center">&lt;&lt;&#x3D;</td>
+<td align="center">67</td>
+</tr>
+<tr>
+<td align="center">else</td>
+<td align="center">10</td>
+<td align="center">&amp;&amp;</td>
+<td align="center">39</td>
+<td align="center">&lt;&#x3D;</td>
+<td align="center">68</td>
+</tr>
+<tr>
+<td align="center">enum</td>
+<td align="center">11</td>
+<td align="center">&amp;&#x3D;</td>
+<td align="center">40</td>
+<td align="center">&#x3D;</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">extern</td>
+<td align="center">12</td>
+<td align="center">(</td>
+<td align="center">41</td>
+<td align="center">&#x3D;&#x3D;</td>
+<td align="center">70</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">13</td>
+<td align="center">)</td>
+<td align="center">42</td>
+<td align="center">&gt;</td>
+<td align="center">71</td>
+</tr>
+<tr>
+<td align="center">for</td>
+<td align="center">14</td>
+<td align="center">*</td>
+<td align="center">43</td>
+<td align="center">&gt;&#x3D;</td>
+<td align="center">72</td>
+</tr>
+<tr>
+<td align="center">goto</td>
+<td align="center">15</td>
+<td align="center">*&#x3D;</td>
+<td align="center">44</td>
+<td align="center">&gt;&gt;</td>
+<td align="center">73</td>
+</tr>
+<tr>
+<td align="center">if</td>
+<td align="center">16</td>
+<td align="center">,</td>
+<td align="center">45</td>
+<td align="center">&gt;&gt;&#x3D;</td>
+<td align="center">74</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">17</td>
+<td align="center">.</td>
+<td align="center">46</td>
+<td align="center">#</td>
+<td align="center">75</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">18</td>
+<td align="center">&#x2F;</td>
+<td align="center">47</td>
+<td align="center">实数</td>
+<td align="center">76</td>
+</tr>
+<tr>
+<td align="center">register</td>
+<td align="center">19</td>
+<td align="center">&#x2F;&#x3D;</td>
+<td align="center">48</td>
+<td align="center">标识符</td>
+<td align="center">77</td>
+</tr>
+<tr>
+<td align="center">return</td>
+<td align="center">20</td>
+<td align="center">:</td>
+<td align="center">49</td>
+<td align="center">字符串常量</td>
+<td align="center">78</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">21</td>
+<td align="center">;</td>
+<td align="center">50</td>
+<td align="center">字符常量</td>
+<td align="center">79</td>
+</tr>
+<tr>
+<td align="center">signed</td>
+<td align="center">22</td>
+<td align="center">?</td>
+<td align="center">51</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">sizeof</td>
+<td align="center">23</td>
+<td align="center">[</td>
+<td align="center">52</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">static</td>
+<td align="center">24</td>
+<td align="center">]</td>
+<td align="center">53</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">struct</td>
+<td align="center">25</td>
+<td align="center">^</td>
+<td align="center">54</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">switch</td>
+<td align="center">26</td>
+<td align="center">^&#x3D;</td>
+<td align="center">55</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">typedef</td>
+<td align="center">27</td>
+<td align="center">{</td>
+<td align="center">56</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">union</td>
+<td align="center">28</td>
+<td align="center">}</td>
+<td align="center">57</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">void</td>
+<td align="center">29</td>
+<td align="center">|</td>
+<td align="center">58</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
     </div>
 
     
@@ -245,8 +489,12 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
     </footer>
   </article>
 </div>
@@ -255,6 +503,8 @@
 
 
 
+
+    <div class="comments" id="SOHUCS" sid="59f934367c2bf3946af17537950d52a7"></div>
 </div>
   </main>
 

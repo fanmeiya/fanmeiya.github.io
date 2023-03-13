@@ -27,7 +27,7 @@
 <meta property="og:description" content="使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-01T08:49:30.000Z">
-<meta property="article:modified_time" content="2023-03-01T15:20:26.741Z">
+<meta property="article:modified_time" content="2023-03-09T03:41:28.712Z">
 <meta property="article:author" content="FMY">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%A1%AE%E5%AE%9AC%E8%AF%AD%E8%A8%80%E5%AD%90%E9%9B%86%E7%9A%84%E7%A7%8D%E5%88%AB%E7%A0%81%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">1、确定C语言子集的种别码表</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%A1%AE%E5%AE%9AC%E8%AF%AD%E8%A8%80%E5%AD%90%E9%9B%86%E7%9A%84%E7%A7%8D%E5%88%AB%E7%A0%81%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">1、确定C语言子集的种别码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81PyQt5%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">2、PyQt5进行简单界面设计</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -128,13 +128,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -147,7 +147,7 @@
 
         </div>
       </div>
-	  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1405903472&auto=0&height=66"></iframe>
+	  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1405903472&auto=0&height=66"></iframe><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=8184178023&auto=0&height=430"></iframe>
     </div>
 
     
@@ -195,9 +195,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-03-01 16:49:30 / 修改时间：23:20:26" itemprop="dateCreated datePublished" datetime="2023-03-01T16:49:30+08:00">2023-03-01</time>
+      <time title="创建时间：2023-03-01 16:49:30" itemprop="dateCreated datePublished" datetime="2023-03-01T16:49:30+08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-09 11:41:28" itemprop="dateModified" datetime="2023-03-09T11:41:28+08:00">2023-03-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -481,6 +487,9 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
+<h3 id="2、PyQt5进行简单界面设计"><a href="#2、PyQt5进行简单界面设计" class="headerlink" title="2、PyQt5进行简单界面设计"></a>2、PyQt5进行简单界面设计</h3><p>由于PyQt5比较难上手，所以借助designer这个工具，在pycharm的”文件-&gt;设置-&gt;项目-&gt;python解释器”中下载PyQ55和pyqt5-tools，也可以在终端使用pip命令”pip install 包名”,需要注意的是pyqt5-tools目前最高只能适应python3.9版本。下载完后，在pycharm的”文件-&gt;设置-&gt;工具-&gt;外部工具”点击’+’号，然后按照</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/youcans/article/details/120925109">参考链接</a>进行配置，配置完成后可将designer.exe的快捷方式发送到桌面。然后点击进入该软件，创建1个Main Window，3个Widget,在Main Window中会发现左上方出现了“在这里输入”，这是菜单栏的设置方式，我们双击它，输入想取的名字，比如输入”文件”然后一定要**&#x3D;&#x3D;回车&#x3D;&#x3D;**否则无效，此时就新建了一个菜单，点击”文件”还可以建立子菜单,输入“(&amp;字符)”可显示简称，比如输入“open(&amp;O)”就会显示open(O)。在菜单栏下方右键点击“添加工具栏”。</p>
+<p>在紧挨着菜单栏下方就会出现工具栏，然后单击该工具栏再点击“视图-&gt;动作编辑器”</p>
 
     </div>
 
@@ -495,6 +504,15 @@
 
         
 
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/09/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/" rel="next" title="梯度下降法">
+                  梯度下降法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>

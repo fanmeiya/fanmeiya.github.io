@@ -2323,7 +2323,7 @@ ul.breadcrumb li:last-child {
 .main-inner {
   border-radius: initial;
   box-sizing: border-box;
-  width: calc(100% - 312px);
+  width: calc(100% - 342px);
 }
 @media (max-width: 991px) {
   .main-inner {
@@ -2332,7 +2332,7 @@ ul.breadcrumb li:last-child {
   }
 }
 .footer-inner {
-  padding-left: 312px;
+  padding-left: 342px;
 }
 @media (max-width: 991px) {
   .footer-inner {
@@ -2342,7 +2342,7 @@ ul.breadcrumb li:last-child {
   }
 }
 .column {
-  width: 300px;
+  width: 330px;
 }
 @media (max-width: 991px) {
   .column {

@@ -124,19 +124,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
         <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">标签</span></a>
+        <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
 </div>
@@ -192,7 +187,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2025-07-10 16:10:25 / 修改时间：16:32:16" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
+      <time title="创建时间：2025-07-10 16:10:25 / 修改时间：16:37:53" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -228,213 +223,43 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>1、医学问答基准测试</p>
-<p><img src="/./../images/image-20250710163204802.png" alt="image-20250710163204802"></p>
+          <h2 id="1、医学基准测试"><a href="#1、医学基准测试" class="headerlink" title="1、医学基准测试"></a>1、医学基准测试</h2><p><img src="/./../images/image-20250710163204802.png" alt="image-20250710163204802"></p>
+<p>DiagnosisArena:</p>
+<h2 id="2、相关论文"><a href="#2、相关论文" class="headerlink" title="2、相关论文"></a>2、相关论文</h2><h3 id="2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"><a href="#2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM" class="headerlink" title="2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"></a>2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM</h3><p>通过以下几个步骤解决在大型语言模型（LLMs）中增强医疗领域复杂推理能力的问题：</p>
+<ol>
+<li>构建可验证的医疗问题</li>
+</ol>
+<ul>
+<li><strong>选择和转换问题</strong>：从现有的医疗考试问题中筛选出具有挑战性、需要深入推理的问题，并将其从选择题格式转换为开放式问题，每个问题都有唯一的、客观的真实答案，以便于验证模型的输出。</li>
+</ul>
+<ol start="2">
+<li>开发医疗验证器</li>
+</ol>
+<ul>
+<li><strong>验证模型输出</strong>：使用一个基于LLM的验证器来检查模型生成的答案是否与真实答案匹配，提供正确的反馈。</li>
+</ul>
+<ol start="3">
+<li>两阶段方法</li>
+</ol>
+<p>第一阶段：学习复杂推理</p>
+<ul>
+<li><strong>搜索正确轨迹</strong>：利用验证器的反馈来引导模型通过策略搜索找到正确的推理路径，如果初始推理被拒绝，则应用不同的策略（如回溯、探索新路径、验证和纠正）来迭代改进答案。</li>
+<li><strong>构建SFT训练数据</strong>：将成功的推理路径重构为连贯的自然语言推理过程（复杂CoT），用于监督式微调（Supervised Fine-Tuning, SFT），以教会模型在回答前进行深入思考。</li>
+</ul>
+<p>第二阶段：通过强化学习增强复杂推理<strong>强化学习（RL）</strong>：在第一阶段学习到的复杂推理技能基础上，使用基于验证器反馈的稀疏奖励来引导模型自我改进，使用Proximal Policy Optimization（PPO）算法进行策略优化。</p>
+<ol start="4">
+<li>实验验证</li>
+</ol>
+<ul>
+<li><strong>模型训练和评估</strong>：使用上述方法训练了两个版本的模型（HuatuoGPT-o1-8B和HuatuoGPT-o1-70B），并在多个医疗基准上进行评估，显示出与通用和医疗特定的基线模型相比的优越性能。</li>
+</ul>
+<ol start="5">
+<li>扩展到中文医疗领域</li>
+</ol>
+<ul>
+<li><strong>中文医疗模型</strong>：为了验证方法的适应性，作者还将该方法应用于中文医疗领域，并在中文医疗基准上评估了模型的性能。</li>
+</ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://fanmeiya.github.io/2023/03/09/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="FMY">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FMY's blogs">
-      <meta itemprop="description" content="想写什么就什么">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FMY's blogs">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/09/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/" class="post-title-link" itemprop="url">梯度下降法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-03-09 09:46:25" itemprop="dateCreated datePublished" datetime="2023-03-09T09:46:25+08:00">2023-03-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-16 15:42:04" itemprop="dateModified" datetime="2023-03-16T15:42:04+08:00">2023-03-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    <a title="梯度下降法" href="/2023/03/09/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/#SOHUCS" itemprop="discussionUrl">
-      <span id="sourceId::b53ed198e2b02bb19a3ffa92853daffc" class="cy_cmt_count" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.jpg">
-      <meta itemprop="name" content="FMY">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FMY's blogs">
-      <meta itemprop="description" content="想写什么就什么">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FMY's blogs">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" class="post-title-link" itemprop="url">手动构建词法分析器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-03-01 16:49:30" itemprop="dateCreated datePublished" datetime="2023-03-01T16:49:30+08:00">2023-03-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-03 23:46:10" itemprop="dateModified" datetime="2024-03-03T23:46:10+08:00">2024-03-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">编译原理</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    <a title="手动构建词法分析器" href="/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/#SOHUCS" itemprop="discussionUrl">
-      <span id="sourceId::59f934367c2bf3946af17537950d52a7" class="cy_cmt_count" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>使用python来编写C语言子集的一个词法分析器；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，利用，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

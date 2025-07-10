@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"fanmeiya.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","width":330,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
+    <meta name="description" content="使用python来编写C语言子集的一个词法分析器；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，利用，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="手动构建词法分析器">
 <meta property="og:url" content="http://fanmeiya.github.io/2023/03/01/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/index.html">
 <meta property="og:site_name" content="FMY&#39;s blogs">
-<meta property="og:description" content="使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
+<meta property="og:description" content="使用python来编写C语言子集的一个词法分析器；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，利用，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-01T08:49:30.000Z">
-<meta property="article:modified_time" content="2023-03-09T03:41:28.712Z">
+<meta property="article:modified_time" content="2024-03-03T15:46:10.000Z">
 <meta property="article:author" content="FMY">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%A1%AE%E5%AE%9AC%E8%AF%AD%E8%A8%80%E5%AD%90%E9%9B%86%E7%9A%84%E7%A7%8D%E5%88%AB%E7%A0%81%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">1、确定C语言子集的种别码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81PyQt5%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">2、PyQt5进行简单界面设计</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%A1%AE%E5%AE%9AC%E8%AF%AD%E8%A8%80%E5%AD%90%E9%9B%86%E7%9A%84%E7%A7%8D%E5%88%AB%E7%A0%81%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">1、确定C语言子集的种别码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%88%A9%E7%94%A8ply%E7%9A%84lex%E6%A8%A1%E5%9D%97%E6%9D%A5%E5%AF%B9%E6%BA%90%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8Ctoken%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2、利用ply的lex模块来对源代码进行token化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -128,13 +128,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -203,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-09 11:41:28" itemprop="dateModified" datetime="2023-03-09T11:41:28+08:00">2023-03-09</time>
+      <time title="修改时间：2024-03-03 23:46:10" itemprop="dateModified" datetime="2024-03-03T23:46:10+08:00">2024-03-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -239,257 +239,267 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>使用python来编写C语言子集的一个词法分析器，利用pyqt5来设计界面；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，根据状态转换图识别出对应的单词符号，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：</p>
+        <p>使用python来编写C语言子集的一个词法分析器；词法分析器的过程是一行一行读入字符串到缓冲区中，再从缓冲区中按单个字符读入，利用，查找单词的token值，转换并输出token串（一个3元组：行号，单词的值，种别码），并且输出相应的错误信息。过程如下：</p>
 <span id="more"></span>
 
-<h3 id="1、确定C语言子集的种别码表"><a href="#1、确定C语言子集的种别码表" class="headerlink" title="1、确定C语言子集的种别码表"></a>1、确定C语言子集的种别码表</h3><p>种别码表的数据参考了网上资料，原网址是：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/unixfy/p/3242917.html">写一个简单的C词法分析器 - unixfy - 博客园 (cnblogs.com)</a></p>
+<h3 id="1、确定C语言子集的种别码表"><a href="#1、确定C语言子集的种别码表" class="headerlink" title="1、确定C语言子集的种别码表"></a>1、确定C语言子集的种别码表</h3><p>种别码表的数据参考了网上资料，原网址是：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/unixfy/p/3242917.html">写一个简单的C词法分析器 - unixfy - 博客园 (cnblogs.com)</a>，“#”是整个C语言字符串的结尾标识符，在生成token文件时加上即可。</p>
 <table>
 <thead>
 <tr>
-<th align="center">单词符号</th>
-<th align="center">种别码</th>
-<th align="center">单词符号</th>
-<th align="center">种别码</th>
-<th align="center">单词符号</th>
-<th align="center">种别码</th>
+<th>words</th>
+<th>id</th>
+<th>words</th>
+<th>id</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">while</td>
-<td align="center">1</td>
-<td align="center">-</td>
-<td align="center">30</td>
-<td align="center">||</td>
-<td align="center">59</td>
+<td>while</td>
+<td>1</td>
+<td>)</td>
+<td>42</td>
 </tr>
 <tr>
-<td align="center">break</td>
-<td align="center">2</td>
-<td align="center">–</td>
-<td align="center">31</td>
-<td align="center">|&#x3D;</td>
-<td align="center">60</td>
+<td>break</td>
+<td>2</td>
+<td>*</td>
+<td>43</td>
 </tr>
 <tr>
-<td align="center">case</td>
-<td align="center">3</td>
-<td align="center">-&#x3D;</td>
-<td align="center">32</td>
-<td align="center">~</td>
-<td align="center">61</td>
+<td>case</td>
+<td>3</td>
+<td>*&#x3D;</td>
+<td>44</td>
 </tr>
 <tr>
-<td align="center">char</td>
-<td align="center">4</td>
-<td align="center">-&gt;</td>
-<td align="center">33</td>
-<td align="center">+</td>
-<td align="center">62</td>
+<td>char</td>
+<td>4</td>
+<td>,</td>
+<td>45</td>
 </tr>
 <tr>
-<td align="center">const</td>
-<td align="center">5</td>
-<td align="center">!</td>
-<td align="center">34</td>
-<td align="center">++</td>
-<td align="center">63</td>
+<td>const</td>
+<td>5</td>
+<td>.</td>
+<td>46</td>
 </tr>
 <tr>
-<td align="center">continue</td>
-<td align="center">6</td>
-<td align="center">!&#x3D;</td>
-<td align="center">35</td>
-<td align="center">+&#x3D;</td>
-<td align="center">64</td>
+<td>continue</td>
+<td>6</td>
+<td>&#x2F;</td>
+<td>47</td>
 </tr>
 <tr>
-<td align="center">default</td>
-<td align="center">7</td>
-<td align="center">%</td>
-<td align="center">36</td>
-<td align="center">&lt;</td>
-<td align="center">65</td>
+<td>default</td>
+<td>7</td>
+<td>&#x2F;&#x3D;</td>
+<td>48</td>
 </tr>
 <tr>
-<td align="center">do</td>
-<td align="center">8</td>
-<td align="center">%&#x3D;</td>
-<td align="center">37</td>
-<td align="center">&lt;&lt;</td>
-<td align="center">66</td>
+<td>do</td>
+<td>8</td>
+<td>:</td>
+<td>49</td>
 </tr>
 <tr>
-<td align="center">double</td>
-<td align="center">9</td>
-<td align="center">&amp;</td>
-<td align="center">38</td>
-<td align="center">&lt;&lt;&#x3D;</td>
-<td align="center">67</td>
+<td>double</td>
+<td>9</td>
+<td>;</td>
+<td>50</td>
 </tr>
 <tr>
-<td align="center">else</td>
-<td align="center">10</td>
-<td align="center">&amp;&amp;</td>
-<td align="center">39</td>
-<td align="center">&lt;&#x3D;</td>
-<td align="center">68</td>
+<td>else</td>
+<td>10</td>
+<td>?</td>
+<td>51</td>
 </tr>
 <tr>
-<td align="center">enum</td>
-<td align="center">11</td>
-<td align="center">&amp;&#x3D;</td>
-<td align="center">40</td>
-<td align="center">&#x3D;</td>
-<td align="center">69</td>
+<td>enum</td>
+<td>11</td>
+<td>[</td>
+<td>52</td>
 </tr>
 <tr>
-<td align="center">extern</td>
-<td align="center">12</td>
-<td align="center">(</td>
-<td align="center">41</td>
-<td align="center">&#x3D;&#x3D;</td>
-<td align="center">70</td>
+<td>extern</td>
+<td>12</td>
+<td>]</td>
+<td>53</td>
 </tr>
 <tr>
-<td align="center">float</td>
-<td align="center">13</td>
-<td align="center">)</td>
-<td align="center">42</td>
-<td align="center">&gt;</td>
-<td align="center">71</td>
+<td>float</td>
+<td>13</td>
+<td>^</td>
+<td>54</td>
 </tr>
 <tr>
-<td align="center">for</td>
-<td align="center">14</td>
-<td align="center">*</td>
-<td align="center">43</td>
-<td align="center">&gt;&#x3D;</td>
-<td align="center">72</td>
+<td>for</td>
+<td>14</td>
+<td>^&#x3D;</td>
+<td>55</td>
 </tr>
 <tr>
-<td align="center">goto</td>
-<td align="center">15</td>
-<td align="center">*&#x3D;</td>
-<td align="center">44</td>
-<td align="center">&gt;&gt;</td>
-<td align="center">73</td>
+<td>goto</td>
+<td>15</td>
+<td>{</td>
+<td>56</td>
 </tr>
 <tr>
-<td align="center">if</td>
-<td align="center">16</td>
-<td align="center">,</td>
-<td align="center">45</td>
-<td align="center">&gt;&gt;&#x3D;</td>
-<td align="center">74</td>
+<td>if</td>
+<td>16</td>
+<td>}</td>
+<td>57</td>
 </tr>
 <tr>
-<td align="center">int</td>
-<td align="center">17</td>
-<td align="center">.</td>
-<td align="center">46</td>
-<td align="center">#</td>
-<td align="center">75</td>
+<td>int</td>
+<td>17</td>
+<td>|</td>
+<td>58</td>
 </tr>
 <tr>
-<td align="center">long</td>
-<td align="center">18</td>
-<td align="center">&#x2F;</td>
-<td align="center">47</td>
-<td align="center">实数</td>
-<td align="center">76</td>
+<td>long</td>
+<td>18</td>
+<td>||</td>
+<td>59</td>
 </tr>
 <tr>
-<td align="center">register</td>
-<td align="center">19</td>
-<td align="center">&#x2F;&#x3D;</td>
-<td align="center">48</td>
-<td align="center">标识符</td>
-<td align="center">77</td>
+<td>register</td>
+<td>19</td>
+<td>|&#x3D;</td>
+<td>60</td>
 </tr>
 <tr>
-<td align="center">return</td>
-<td align="center">20</td>
-<td align="center">:</td>
-<td align="center">49</td>
-<td align="center">字符串常量</td>
-<td align="center">78</td>
+<td>return</td>
+<td>20</td>
+<td>~</td>
+<td>61</td>
 </tr>
 <tr>
-<td align="center">short</td>
-<td align="center">21</td>
-<td align="center">;</td>
-<td align="center">50</td>
-<td align="center">字符常量</td>
-<td align="center">79</td>
+<td>short</td>
+<td>21</td>
+<td>+</td>
+<td>62</td>
 </tr>
 <tr>
-<td align="center">signed</td>
-<td align="center">22</td>
-<td align="center">?</td>
-<td align="center">51</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>signed</td>
+<td>22</td>
+<td>++</td>
+<td>63</td>
 </tr>
 <tr>
-<td align="center">sizeof</td>
-<td align="center">23</td>
-<td align="center">[</td>
-<td align="center">52</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>sizeof</td>
+<td>23</td>
+<td>+&#x3D;</td>
+<td>64</td>
 </tr>
 <tr>
-<td align="center">static</td>
-<td align="center">24</td>
-<td align="center">]</td>
-<td align="center">53</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>static</td>
+<td>24</td>
+<td>&lt;</td>
+<td>65</td>
 </tr>
 <tr>
-<td align="center">struct</td>
-<td align="center">25</td>
-<td align="center">^</td>
-<td align="center">54</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>struct</td>
+<td>25</td>
+<td>&lt;&lt;</td>
+<td>66</td>
 </tr>
 <tr>
-<td align="center">switch</td>
-<td align="center">26</td>
-<td align="center">^&#x3D;</td>
-<td align="center">55</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>switch</td>
+<td>26</td>
+<td>&lt;&lt;&#x3D;</td>
+<td>67</td>
 </tr>
 <tr>
-<td align="center">typedef</td>
-<td align="center">27</td>
-<td align="center">{</td>
-<td align="center">56</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>typedef</td>
+<td>27</td>
+<td>&lt;&#x3D;</td>
+<td>68</td>
 </tr>
 <tr>
-<td align="center">union</td>
-<td align="center">28</td>
-<td align="center">}</td>
-<td align="center">57</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>union</td>
+<td>28</td>
+<td>&#x3D;</td>
+<td>69</td>
 </tr>
 <tr>
-<td align="center">void</td>
-<td align="center">29</td>
-<td align="center">|</td>
-<td align="center">58</td>
-<td align="center"></td>
-<td align="center"></td>
+<td>void</td>
+<td>29</td>
+<td>&#x3D;&#x3D;</td>
+<td>70</td>
+</tr>
+<tr>
+<td>-</td>
+<td>30</td>
+<td>&gt;</td>
+<td>71</td>
+</tr>
+<tr>
+<td>–</td>
+<td>31</td>
+<td>&gt;&#x3D;</td>
+<td>72</td>
+</tr>
+<tr>
+<td>-&#x3D;</td>
+<td>32</td>
+<td>&gt;&gt;</td>
+<td>73</td>
+</tr>
+<tr>
+<td>-&gt;</td>
+<td>33</td>
+<td>&gt;&gt;&#x3D;</td>
+<td>74</td>
+</tr>
+<tr>
+<td>!</td>
+<td>34</td>
+<td>#</td>
+<td>75</td>
+</tr>
+<tr>
+<td>!&#x3D;</td>
+<td>35</td>
+<td>数值型常数</td>
+<td>76</td>
+</tr>
+<tr>
+<td>%</td>
+<td>36</td>
+<td>标识符</td>
+<td>77</td>
+</tr>
+<tr>
+<td>%&#x3D;</td>
+<td>37</td>
+<td>字符串常量</td>
+<td>78</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>38</td>
+<td>字符常量</td>
+<td>79</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>39</td>
+<td>空</td>
+<td>80</td>
+</tr>
+<tr>
+<td>&amp;&#x3D;</td>
+<td>40</td>
+<td>main</td>
+<td>81</td>
+</tr>
+<tr>
+<td>(</td>
+<td>41</td>
+<td></td>
+<td></td>
 </tr>
 </tbody></table>
-<h3 id="2、PyQt5进行简单界面设计"><a href="#2、PyQt5进行简单界面设计" class="headerlink" title="2、PyQt5进行简单界面设计"></a>2、PyQt5进行简单界面设计</h3><p>由于PyQt5比较难上手，所以借助designer这个工具，在pycharm的”文件-&gt;设置-&gt;项目-&gt;python解释器”中下载PyQ55和pyqt5-tools，也可以在终端使用pip命令”pip install 包名”,需要注意的是pyqt5-tools目前最高只能适应python3.9版本。下载完后，在pycharm的”文件-&gt;设置-&gt;工具-&gt;外部工具”点击’+’号，然后按照</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/youcans/article/details/120925109">参考链接</a>进行配置，配置完成后可将designer.exe的快捷方式发送到桌面。然后点击进入该软件，创建1个Main Window，3个Widget,在Main Window中会发现左上方出现了“在这里输入”，这是菜单栏的设置方式，我们双击它，输入想取的名字，比如输入”文件”然后一定要**&#x3D;&#x3D;回车&#x3D;&#x3D;**否则无效，此时就新建了一个菜单，点击”文件”还可以建立子菜单,输入“(&amp;字符)”可显示简称，比如输入“open(&amp;O)”就会显示open(O)。在菜单栏下方右键点击“添加工具栏”。</p>
-<p>在紧挨着菜单栏下方就会出现工具栏，然后单击该工具栏再点击“视图-&gt;动作编辑器”</p>
+<h3 id="2、利用ply的lex模块来对源代码进行token化"><a href="#2、利用ply的lex模块来对源代码进行token化" class="headerlink" title="2、利用ply的lex模块来对源代码进行token化"></a>2、利用ply的lex模块来对源代码进行token化</h3><p>相关用法参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/P_Chou/p/python-lex-yacc.html">【译】Python Lex Yacc手册 - P_Chou - 博客园 (cnblogs.com)</a></p>
 
     </div>
 
@@ -532,7 +542,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

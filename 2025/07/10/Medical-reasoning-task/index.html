@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"fanmeiya.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","width":330,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1、医学基准测试 DiagnosisArena: 2、相关论文2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM通过以下几个步骤解决在大型语言模型（LLMs）中增强医疗领域复杂推理能力的问题：  构建可验证的医疗问题   选择和转换问题：从现有的医疗考试问题中筛选出具有挑战性、需要深入推理的问题，并将其从选择题格式转换为开放式问题，每个问题都有唯一的、客观的真实答案，以便于验证">
+    <meta name="description" content="1、医学基准测试 DiagnosisArena: 全面具有挑战的基准测试，评估LLMs临床诊断推理能力，从各个顶级医学期刊中收集临床病例报告，将其花费为病例信息、体格检查、诊断测试以及最终诊断，通过各种AI、专家的筛选去掉简单、模糊的病例。gpt-4o作为评估模型，有两种形式的评估：开放式和多项选择题，研究发现将诊断任务转换为多项选择格式后，模型性能显著提升。  具体案例分析：通过分析一个具体病例">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Medical-reasoning-task">
 <meta property="og:url" content="http://fanmeiya.github.io/2025/07/10/Medical-reasoning-task/index.html">
 <meta property="og:site_name" content="FMY&#39;s blogs">
-<meta property="og:description" content="1、医学基准测试 DiagnosisArena: 2、相关论文2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM通过以下几个步骤解决在大型语言模型（LLMs）中增强医疗领域复杂推理能力的问题：  构建可验证的医疗问题   选择和转换问题：从现有的医疗考试问题中筛选出具有挑战性、需要深入推理的问题，并将其从选择题格式转换为开放式问题，每个问题都有唯一的、客观的真实答案，以便于验证">
+<meta property="og:description" content="1、医学基准测试 DiagnosisArena: 全面具有挑战的基准测试，评估LLMs临床诊断推理能力，从各个顶级医学期刊中收集临床病例报告，将其花费为病例信息、体格检查、诊断测试以及最终诊断，通过各种AI、专家的筛选去掉简单、模糊的病例。gpt-4o作为评估模型，有两种形式的评估：开放式和多项选择题，研究发现将诊断任务转换为多项选择格式后，模型性能显著提升。  具体案例分析：通过分析一个具体病例">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://fanmeiya.github.io/images/image-20250710163204802.png">
 <meta property="article:published_time" content="2025-07-10T08:10:25.000Z">
-<meta property="article:modified_time" content="2025-07-10T08:37:53.605Z">
+<meta property="article:modified_time" content="2025-07-10T10:12:28.000Z">
 <meta property="article:author" content="FMY">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://fanmeiya.github.io/images/image-20250710163204802.png">
@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%8C%BB%E5%AD%A6%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">1、医学基准测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">2、相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-HuatuoGPT-o1%EF%BC%9A%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%83%BD%E5%A4%9F%E8%BF%9B%E8%A1%8C%E5%A4%8D%E6%9D%82%E6%8E%A8%E7%90%86%E7%9A%84%E5%8C%BB%E7%96%97LLM"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%8C%BB%E5%AD%A6%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">1、医学基准测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">2、相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-HuatuoGPT-o1%EF%BC%9A%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%83%BD%E5%A4%9F%E8%BF%9B%E8%A1%8C%E5%A4%8D%E6%9D%82%E6%8E%A8%E7%90%86%E7%9A%84%E5%8C%BB%E7%96%97LLM"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DoctorRAG-%E6%97%A8%E5%9C%A8%E8%A7%A3%E5%86%B3%E7%8E%B0%E6%9C%89%E5%8C%BB%E7%96%97%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E5%9E%8B%E7%94%9F%E6%88%90%EF%BC%88RAG%EF%BC%89%E7%B3%BB%E7%BB%9F%E5%9C%A8%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E5%8C%BB%E7%96%97%E4%BB%BB%E5%8A%A1%E6%97%B6%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 DoctorRAG:旨在解决现有医疗检索增强型生成（RAG）系统在处理复杂医疗任务时的局限性。</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -123,7 +123,7 @@
     <img class="site-author-image" itemprop="image" alt="FMY"
       src="/images/%E5%A4%B4%E5%83%8F.jpg">
   <p class="site-author-name" itemprop="name">FMY</p>
-  <div class="site-description" itemprop="description">想写什么就什么</div>
+  <div class="site-description" itemprop="description">想写什么就写什么</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -172,7 +172,7 @@
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FMY's blogs">
-      <meta itemprop="description" content="想写什么就什么">
+      <meta itemprop="description" content="想写什么就写什么">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
@@ -193,7 +193,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2025-07-10 16:10:25 / 修改时间：16:37:53" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
+      <time title="创建时间：2025-07-10 16:10:25 / 修改时间：18:12:28" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,6 +231,11 @@
     <div class="post-body" itemprop="articleBody">
         <h2 id="1、医学基准测试"><a href="#1、医学基准测试" class="headerlink" title="1、医学基准测试"></a>1、医学基准测试</h2><p><img src="/./../images/image-20250710163204802.png" alt="image-20250710163204802"></p>
 <p>DiagnosisArena:</p>
+<p>全面具有挑战的基准测试，评估LLMs临床诊断推理能力，从各个顶级医学期刊中收集临床病例报告，将其花费为病例信息、体格检查、诊断测试以及最终诊断，通过各种AI、专家的筛选去掉简单、模糊的病例。gpt-4o作为评估模型，有两种形式的评估：开放式和多项选择题，研究发现将诊断任务转换为多项选择格式后，模型性能显著提升。</p>
+<ul>
+<li><strong>具体案例分析</strong>：通过分析一个具体病例，探讨当前推理模型在解决复杂诊断问题时的局限性。例如，DeepSeek-R1在诊断“附属二尖瓣组织”时，忽略了多个间接证据，过度依赖常见疾病的推理路径，导致诊断错误。</li>
+<li><strong>模型局限性</strong>：当前的LLMs尚未完全适应临床诊断场景中的复杂推理需求。这些模型在处理复杂临床问题时，仍然依赖于知识记忆，而不是深入理解和推理关键细节。</li>
+</ul>
 <h2 id="2、相关论文"><a href="#2、相关论文" class="headerlink" title="2、相关论文"></a>2、相关论文</h2><h3 id="2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"><a href="#2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM" class="headerlink" title="2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"></a>2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM</h3><p>通过以下几个步骤解决在大型语言模型（LLMs）中增强医疗领域复杂推理能力的问题：</p>
 <ol>
 <li>构建可验证的医疗问题</li>
@@ -253,17 +258,24 @@
 <li><strong>构建SFT训练数据</strong>：将成功的推理路径重构为连贯的自然语言推理过程（复杂CoT），用于监督式微调（Supervised Fine-Tuning, SFT），以教会模型在回答前进行深入思考。</li>
 </ul>
 <p>第二阶段：通过强化学习增强复杂推理<strong>强化学习（RL）</strong>：在第一阶段学习到的复杂推理技能基础上，使用基于验证器反馈的稀疏奖励来引导模型自我改进，使用Proximal Policy Optimization（PPO）算法进行策略优化。</p>
-<ol start="4">
-<li>实验验证</li>
+<h3 id="2-2-DoctorRAG-旨在解决现有医疗检索增强型生成（RAG）系统在处理复杂医疗任务时的局限性。"><a href="#2-2-DoctorRAG-旨在解决现有医疗检索增强型生成（RAG）系统在处理复杂医疗任务时的局限性。" class="headerlink" title="2.2 DoctorRAG:旨在解决现有医疗检索增强型生成（RAG）系统在处理复杂医疗任务时的局限性。"></a>2.2 DoctorRAG:旨在解决现有医疗检索增强型生成（RAG）系统在处理复杂医疗任务时的局限性。</h3><p>现有的医疗 RAG 系统主要依赖于医学知识库中的知识，忽视了从类似患者案例中获得的经验性知识。生成模型的输出需要经过严格的验证，以确保它们不仅相关，而且与检索到的医疗背景信息一致，这需要一个专门的机制来进行迭代细化和验证。</p>
+<p>具体来说，该框架通过以下两个主要阶段解决问题：</p>
+<ol>
+<li>Expertise-Experience retrieval and aggregation（专业知识与经验检索与聚合）</li>
 </ol>
 <ul>
-<li><strong>模型训练和评估</strong>：使用上述方法训练了两个版本的模型（HuatuoGPT-o1-8B和HuatuoGPT-o1-70B），并在多个医疗基准上进行评估，显示出与通用和医疗特定的基线模型相比的优越性能。</li>
+<li><strong>知识库（Knowledge Base, K）</strong>：从多个医学知识源中构建，这些源首先被分割成文本块，然后转换成声明句，并标注上医学概念标识符。这样，知识库中的每个条目都包含一个声明句和一组相关的医学概念。</li>
+<li><strong>患者库（Patient Base, P）</strong>：包含去识别化的患者记录，每条记录包括患者的主诉或临床对话、结构化的临床数据以及辅助元数据。</li>
+<li><strong>查询处理</strong>：对于一个用户查询，系统首先通过查询标注代理（Query Tagging Agent）为其标注相关的医学概念标识符，然后将查询嵌入到与知识库和患者库相同的向量空间中。</li>
+<li><strong>检索机制</strong>：系统从知识库中检索与查询概念匹配且语义相似的声明句，从患者库中检索与查询向量相似的患者记录。检索到的知识和患者记录被聚合起来，形成一个统一的上下文，作为生成模块的输入。</li>
 </ul>
-<ol start="5">
-<li>扩展到中文医疗领域</li>
+<ol start="2">
+<li>Iterative answer optimization with multi-agent Med-TextGrad（多智能体 Med-TextGrad 的迭代答案优化）</li>
 </ol>
 <ul>
-<li><strong>中文医疗模型</strong>：为了验证方法的适应性，作者还将该方法应用于中文医疗领域，并在中文医疗基准上评估了模型的性能。</li>
+<li><strong>Med-TextGrad 框架</strong>：该框架通过多智能体文本梯度优化过程来迭代地改进生成的答案。它包括生成器（Generator）、上下文标准（Context Criterion）、患者标准（Patient Criterion）以及上下文优化器（Context Optimizer）和患者优化器（Patient Optimizer）。</li>
+<li><strong>文本梯度计算与反向传播</strong>：生成的答案首先被上下文标准和患者标准评估，产生文本形式的批评意见。这些批评意见被用来计算答案级别的文本梯度，然后进一步计算提示级别的文本梯度。这些梯度通过文本梯度下降步骤（Textual Gradient Descent, TGD）更新提示，从而在下一次迭代中生成更优的答案。</li>
+<li><strong>迭代优化</strong>：这个过程会持续进行预定的迭代次数，或者直到满足某种收敛条件（例如，批评意见或答案的变化最小化）。</li>
 </ul>
 
     </div>

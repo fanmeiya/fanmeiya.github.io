@@ -185,9 +185,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2025-07-10 16:10:25 / 修改时间：18:12:28" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
+      <time title="创建时间：2025-07-10 16:10:25" itemprop="dateCreated datePublished" datetime="2025-07-10T16:10:25+08:00">2025-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-07-11 17:50:54" itemprop="dateModified" datetime="2025-07-11T17:50:54+08:00">2025-07-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -270,6 +276,173 @@
 <li><strong>Med-TextGrad 框架</strong>：该框架通过多智能体文本梯度优化过程来迭代地改进生成的答案。它包括生成器（Generator）、上下文标准（Context Criterion）、患者标准（Patient Criterion）以及上下文优化器（Context Optimizer）和患者优化器（Patient Optimizer）。</li>
 <li><strong>文本梯度计算与反向传播</strong>：生成的答案首先被上下文标准和患者标准评估，产生文本形式的批评意见。这些批评意见被用来计算答案级别的文本梯度，然后进一步计算提示级别的文本梯度。这些梯度通过文本梯度下降步骤（Textual Gradient Descent, TGD）更新提示，从而在下一次迭代中生成更优的答案。</li>
 <li><strong>迭代优化</strong>：这个过程会持续进行预定的迭代次数，或者直到满足某种收敛条件（例如，批评意见或答案的变化最小化）。</li>
+</ul>
+<h3 id="2-3-MedDreamer：一种专为临床决策设计的两阶段模型-based-强化学习框架。"><a href="#2-3-MedDreamer：一种专为临床决策设计的两阶段模型-based-强化学习框架。" class="headerlink" title="2.3 MedDreamer：一种专为临床决策设计的两阶段模型-based 强化学习框架。"></a>2.3 MedDreamer：一种专为临床决策设计的两阶段模型-based 强化学习框架。</h3><p>作者把复杂、稀疏又不规则的电子病历数据先映射到一个更干净、更结构化的潜在空间，再靠“想象”虚拟病人轨迹来训练策略，从而在不伤及真实病人的前提下学会更优的治疗方案。</p>
+<p>关键创新：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AFI 模块</strong></td>
+<td>自适应特征整合；把原始数值 + 时间间隔一起编码，显式建模缺失与不规则采样</td>
+</tr>
+<tr>
+<td><strong>潜在世界模型</strong></td>
+<td>基于 RSSM + 离散潜变量，先学会“病人如何演化”</td>
+</tr>
+<tr>
+<td><strong>两阶段训练</strong></td>
+<td><strong>阶段1</strong>：真实轨迹 + 少量短期想象，保证策略“脚踏实地” <strong>阶段2</strong>：从每个中间状态起完全想象，鼓励探索、超越历史</td>
+</tr>
+<tr>
+<td><strong>安全混合回放</strong></td>
+<td>真实与想象样本按比例混合，既保持临床可信，又能跳出医生的次优决策</td>
+</tr>
+</tbody></table>
+<p>数据集：败血症用药（Sepsis）：MIMIC-IV 21 233 名成人患者；机械通气设置（MV）：eICU 21 595 例 ≥ 24 h 通气患者</p>
+<p>奖励：终点奖励（死&#x2F;活）+中间奖励，用关键生理指标提供及时反馈：指标变好立刻奖励，变坏立刻惩罚</p>
+<p><img src="/./../images/image-20250711154221051.png" alt="image-20250711154221051"></p>
+<p>评估指标：</p>
+<p>**定量指标 **</p>
+<ol>
+<li><strong>V_CWPDIS（Cumulative Weighted Per Decision Importance Sampling）</strong></li>
+</ol>
+<ul>
+<li><strong>中文解释</strong>：累计加权逐步重要性采样。</li>
+<li><strong>为什么要用？</strong><ul>
+<li>现实中不能直接在真实ICU让AI随意试验新方案，所以只能用<strong>离线策略评估</strong>（off-policy evaluation, OPE）。</li>
+</ul>
+</li>
+<li><strong>原理</strong>：<ul>
+<li>回放每条历史病人轨迹时，如果AI策略跟医生选择一致，给这个奖励更高权重；若很少选同样动作，则奖励被弱化。</li>
+<li>还引入“折扣因子”γ，使得近期的奖励影响更大（避免后面累计噪声太大）。</li>
+</ul>
+</li>
+<li><strong>类比举例</strong>：<ul>
+<li>假设医生历史轨迹为A→B→C，AI决策为A→B→D。</li>
+<li>只有A、B重合时的奖励才有高权重，D与C不同则那步奖励加权很低。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：得出“如果全体病人都按AI推荐治疗，预期回报是多少”。</li>
+</ul>
+<ol start="2">
+<li><strong>ESS（Effective Sampling Size，有效样本量）</strong></li>
+</ol>
+<ul>
+<li><strong>中文解释</strong>：有多少“有效轨迹”真正参与了V_CWPDIS的计算。</li>
+<li><strong>原理</strong>：如果AI策略和医生历史动作很接近，大多数轨迹都能参与，ESS高；反之ESS低，评估就不稳。</li>
+<li><strong>用法</strong>：ESS越大，评估越可靠；ESS很小，则这个OPE的结果很可能是噪声。</li>
+</ul>
+<ol start="3">
+<li><strong>Mortality Rate &amp; RM（死亡率和相对死亡率）</strong></li>
+</ol>
+<ul>
+<li><p>**EM (Estimated Mortality)**：用世界模型&#x2F;OPE方法评估，如果大家都按AI方案治疗，会有多少人“可能死亡”。</p>
+</li>
+<li><p>**CM (Clinician Mortality)**：历史上医生治疗下的实际死亡率。</p>
+</li>
+<li><p>**RM (Relative Mortality)**：<br>$$<br>RM &#x3D; \frac{EM - CM}{CM}<br>$$</p>
+<ul>
+<li>正值：AI方案死亡率高于医生，不好。</li>
+<li>负值：AI方案死亡率低于医生，说明有进步。</li>
+</ul>
+</li>
+</ul>
+<p>**定性指标 **</p>
+<ol start="4">
+<li><strong>Episode Return（轨迹回报）</strong></li>
+</ol>
+<ul>
+<li><strong>AI episode return</strong>：用AI策略，每一步都“假想”选一次动作，然后计算整条轨迹奖励总和。</li>
+<li><strong>Imagined episode return</strong>：用世界模型完全想象一条“新轨迹”，累计奖励。</li>
+<li><strong>意义</strong>：衡量整个治疗周期内，AI决策带来的健康获益（奖励高，策略好）。</li>
+</ul>
+<ol start="5">
+<li><strong>Mortality vs Return（回报与死亡率的关系）</strong></li>
+</ol>
+<ul>
+<li><strong>理想现象</strong>：好策略应该“回报高，死亡率低”。</li>
+<li><strong>具体做法</strong>：把不同轨迹的总回报和实际&#x2F;估计死亡率画成图，看是否呈现出“回报越高，死亡越少”的趋势。</li>
+<li><strong>区分</strong>：<ul>
+<li>Model-free：用Q值估算每步回报。</li>
+<li>Model-based：直接用episode return对比每条轨迹的死亡率。</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li><strong>Action Distribution（动作分布）</strong></li>
+</ol>
+<ul>
+<li>统计AI&#x2F;医生选择的各种用药组合出现频率。</li>
+<li>用于分析AI策略是否合理（比如是否过于极端&#x2F;保守）。</li>
+</ul>
+<ol start="7">
+<li><strong>Mortality vs Action Difference（死亡率与动作偏离）</strong></li>
+</ol>
+<ul>
+<li>计算AI和医生每一步用药剂量的“差值”，统计这种偏离下的死亡率。</li>
+<li>理想现象：当AI与医生动作一致时，死亡率低；偏离很大时，死亡率升高，形成“V型”趋势。说明AI决策和医生高度一致时最安全，偶尔探索偏离时风险会升高。</li>
+</ul>
+<h3 id="2-4-Med-PRM-一个基于检索增强生成的过程奖励建模框架，通过检索临床指南和文献中的证据来验证每个推理步骤，从而实现对推理质量的细粒度评估。"><a href="#2-4-Med-PRM-一个基于检索增强生成的过程奖励建模框架，通过检索临床指南和文献中的证据来验证每个推理步骤，从而实现对推理质量的细粒度评估。" class="headerlink" title="2.4 Med-PRM:一个基于检索增强生成的过程奖励建模框架，通过检索临床指南和文献中的证据来验证每个推理步骤，从而实现对推理质量的细粒度评估。"></a>2.4 Med-PRM:一个基于检索增强生成的过程奖励建模框架，通过检索临床指南和文献中的证据来验证每个推理步骤，从而实现对推理质量的细粒度评估。</h3><ol>
+<li><strong>检索增强的过程奖励建模（RAG-AS-A-JUDGE）</strong></li>
+</ol>
+<ul>
+<li><strong>检索相关医学知识</strong>：<ul>
+<li>Med-PRM 使用检索增强生成（RAG）技术，从临床指南和医学文献中检索与问题相关的证据。这些证据为模型提供了丰富的医学背景知识，帮助其生成基于事实的推理。</li>
+<li>检索过程使用了MedCPT（Jin et al., 2023）的双编码器和交叉编码器，从四个生物医学语料库中检索文档：<ul>
+<li>临床指南</li>
+<li>StatPearls</li>
+<li>医学教科书</li>
+<li>罕见疾病语料库</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>步骤级评估</strong>：<ul>
+<li>Med-PRM 通过 RAG-AS-A-JUDGE 方法对每个推理步骤进行二元分类，判断其是否正确。这与传统的基于最终结果的奖励模型（ORM）不同，后者仅根据最终答案的正确性来评估整个推理轨迹。</li>
+<li>每个步骤的标签 通过一个大型语言模型（LLM）生成，该模型结合了问题、推理轨迹和检索到的文档，以确保评估的准确性和医学背景的一致性。</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>训练过程</strong></li>
+</ol>
+<ul>
+<li><strong>数据过滤和标注</strong>：<ul>
+<li>训练数据来自 MedQA、MedMCQA、PubMedQA 和 MMLU 等医学问答数据集。对于每个问题，生成多个候选推理轨迹，并过滤掉步骤过少或过多的轨迹。</li>
+<li>为了保持标签平衡，每个问题的正确推理轨迹数量不超过错误轨迹数量的两倍。</li>
+<li>检索到的文档被截断并附加到问题和推理轨迹之前，形成输入。每个步骤的二元标签由 RAG-AS-A-JUDGE 生成，用于过程级监督。</li>
+</ul>
+</li>
+<li><strong>奖励模型训练</strong>：<ul>
+<li>Med-PRM 使用交叉熵损失函数来训练奖励模型，目标是最小化所有推理步骤的预测标签和真实标签之间的差异。</li>
+<li>模型输入包括问题、检索到的文档和推理轨迹，输出为每个步骤的置信度分数 。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>测试时推理（Test-time Inference）</strong></li>
+</ol>
+<ul>
+<li>推理轨迹选择<ul>
+<li>在测试时，Med-PRM 可以作为验证器，与经过微调的策略模型一起使用。策略模型生成多个推理轨迹，Med-PRM 为每个轨迹分配一个分数，选择分数最高的轨迹作为最终答案。</li>
+<li>论文中使用了两种策略：Best-of-N 和 SC+RM（Self-Consistency + Reward Model）。Best-of-N 选择分数最高的轨迹，而 SC+RM 结合了自一致性（Self-Consistency）和奖励模型评分，选择总奖励分数最高的答案。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li><strong>策略模型微调（Policy Model Fine-tuning）</strong></li>
+</ol>
+<ul>
+<li>拒绝采样<ul>
+<li>Med-PRM 还可以用于微调策略模型。在训练过程中，策略模型生成多个推理轨迹，Med-PRM 为每个轨迹分配步骤级奖励分数。</li>
+<li>只有分数最高的轨迹被保留用于监督微调，从而提高模型在复杂医学问答任务上的性能。</li>
+</ul>
+</li>
 </ul>
 
       

@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -148,6 +148,113 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://fanmeiya.github.io/2025/08/08/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%AE%B0%E5%BF%86%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="FMY">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FMY's blogs">
+      <meta itemprop="description" content="路漫漫其修远兮，吾将上下而求索 ">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FMY's blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/08/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%AE%B0%E5%BF%86%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-08-08 14:15:37 / 修改时间：14:17:51" itemprop="dateCreated datePublished" datetime="2025-08-08T14:15:37+08:00">2025-08-08</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    <a title="" href="/2025/08/08/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E8%AE%B0%E5%BF%86%E6%9C%BA%E5%88%B6/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::673a5c80cff40d37ac6ca99dc5e09e7a" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="大语言模型的动态记忆机制"><a href="#大语言模型的动态记忆机制" class="headerlink" title="大语言模型的动态记忆机制"></a>大语言模型的动态记忆机制</h1><p>大语言模型（LLM）通常受限于固定长度的上下文窗口，这意味着模型只能“记住”提示中包含的有限内容，超过窗口的内容就会被遗忘。在多轮对话、长文档理解等情境中，这种遗忘问题会导致模型无法利用早前提供的信息。</p>
+<h3 id="动态记忆设计机制"><a href="#动态记忆设计机制" class="headerlink" title="动态记忆设计机制"></a>动态记忆设计机制</h3><p><strong>动态记忆机制</strong>指模型如何表示、存储、更新和检索超过其短期上下文的信息。近年提出的方案大致包括以下几种：</p>
+<ol>
+<li><strong>可读写显式内存：</strong> 为模型增加可读写的外部或内部存储单元，模型在生成过程中可以将信息写入其中并在需要时读出。例如RMT在输入序列中引入特殊“记忆token”，模型通过自注意力将过去段落的重要状态写入这些token，并在后续段落读取[ar5iv.labs.arxiv.org](<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=In">https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=In</a> this work%2C we propose,operations and sequence representations processing)。类似地，MemGPT引入操作系统式的<strong>快&#x2F;慢内存</strong>单元，LLM可在有限上下文窗口内调度更大容量的慢速存储[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.08560#:~:text=extended">https://arxiv.org/abs/2310.08560#:~:text=extended</a> conversations and document analysis,flow between itself and the)。这些显式内存通常以向量表示，可以通过训练<strong>学习读写操作</strong>。MemoryLLM和MemoryBank等方法则将记忆融入模型权重的一部分，使模型具备“内部RAM”，在推理时像写便笺一样<strong>持续往内存池添加新知识</strong>[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.04624#:~:text=parameters%2C">https://arxiv.org/abs/2402.04624#:~:text=parameters%2C</a> enabling the model to,also shows operational integrity without)。显式内存的优点是容量潜在无限，缺点是在训练和推理中需要设计读写控制，保证模型不会遗忘地更新或检索错误片段。</li>
+<li><strong>记忆选择与压缩：</strong> 当历史信息极长时，让模型<strong>挑选或压缩</strong>关键内容存储，以节省记忆容量和检索效率。典型策略包括<strong>摘要&#x2F;压缩历史</strong>、<strong>抽取关键句</strong>、<strong>降低冗余度</strong>等。比如EM-LLM通过计算“惊奇度”来检测新颖事件，仅在事件边界处保存记忆，从而<strong>压缩</strong>了长序列[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2407.09450#:~:text=infinite">https://arxiv.org/abs/2407.09450#:~:text=infinite</a> context lengths while maintaining,LLM outperforms its popular)。又如一些上下文压缩算法利用小模型对过长对话进行摘要，将摘要结果作为新的记忆（递归摘要）来保留主要信息。这类方法在对话机器人中常用，使模型在<strong>多轮对话</strong>中通过读取概要来保持上下文连贯。近年的研究（如 Recurrent Context Compression[github.com](<a target="_blank" rel="noopener" href="https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=31,Image%3A">https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=31,Image%3A</a> GitHub Repo stars) 等）探索了在<strong>模型内部自动完成压缩</strong>的方案，让模型自己学习“读两遍文本，第二遍只记重点”的技能[github.com](<a target="_blank" rel="noopener" href="https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=models,Image%3A">https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=models,Image%3A</a> GitHub Repo stars)。记忆压缩的挑战在于如何确保重要细节不丢失，以及压缩内容如何在需要时<strong>准确还原上下文</strong>。</li>
+<li><strong>检索增强记忆：</strong> 即结合<strong>信息检索</strong>技术，从大规模外部知识库或自身过往交互记录中按需提取相关片段提供给模型[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.04426#:~:text=%3E">https://arxiv.org/abs/2112.04426#:~:text=&gt;</a> Abstract%3AWe enhance auto,We)。这种思路类似人类查阅资料来唤起记忆。代表是RETRO和LongMem：模型读取当前输入后，通过向量匹配从<strong>外部文本数据库</strong>检索与当前内容最相关的几个段落，将它们作为额外上下文来生成下一步[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.04426#:~:text=%3E">https://arxiv.org/abs/2112.04426#:~:text=&gt;</a> Abstract%3AWe enhance auto,We)。在对话系统中，也有方法将<strong>过往对话记录向量化</strong>存入一个“记忆库”，对每轮新对话语句检索最相关的历史对话，再提供给LLM参考。索型记忆的优势是可利用<strong>海量现有数据</strong>作为模型“扩展记忆”，但也需解决检索错误或不相关信息可能干扰模型的问题，以及如何保证<strong>检索结果与当前上下文的融合</strong>质量（如避免内容冲突）。</li>
+<li><strong>跨窗口状态保留：</strong> 指模型通过<strong>传递隐藏状态</strong>或记忆摘要，在处理长序列时跨越多个上下文窗口保留状态的连续性。这有点类似传统RNN在每个时间步传递隐状态。Transformer-XL是早期例子：处理每个segment时，将前一segment的隐藏表示当作“记忆”与当前segment一并输入，以此获得长距离依赖[ar5iv.labs.arxiv.org](<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Memory">https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Memory</a> is often combined with,dedicated memory module to store)。RMT在此基础上增加显式记忆token，使这种跨窗口状态保留更灵活持久[ar5iv.labs.arxiv.org](<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=In">https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=In</a> this work%2C we propose,operations and sequence representations processing)[ar5iv.labs.arxiv.org](<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Memory">https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Memory</a> is often combined with,Using a similar approach)。还有一些方法（如 <strong>Block-Recurrent Transformer</strong>、<strong>MART</strong>）借鉴LSTM&#x2F;GRU的门控机制，设计了<strong>记忆更新门</strong>，每处理一段文本就根据当前内容和旧记忆决定怎样更新状态[ar5iv.labs.arxiv.org](<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Transformer">https://ar5iv.labs.arxiv.org/html/2304.11062#:~:text=Transformer</a> (Rae et al,implements full recurrence beyond)。跨窗口记忆的特点是<strong>随时间演化</strong>：模型的内部状态不断根据新输入调整，保留长期信息。这要求模型具有记忆衰减或强化的能力，避免旧信息无限累积导致混乱。一些研究提出<strong>遗忘机制</strong>（如让较久远的记忆逐渐衰减，或引入“衰落记忆”和“持久记忆”两种类型[github.com](<a target="_blank" rel="noopener" href="https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=match">https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling#:~:text=match</a> at L2182 Eidetic and,Arxiv 2024)）来模仿人类既能长久记住重要事件又会淡忘琐事的特性。</li>
+<li><strong>状态演化与自我更新：</strong> 这一机制超出了静态前馈范畴，而是让模型<strong>在推理过程中持续学习</strong>。MemoryLLM和“LTM自演化”理念就属于此：模型一边与环境交互，一边将新的知识和交互内容通过快速权重更新或记忆写入<strong>永久存储</strong>，从而在会话级甚至生命周期级不断提升[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.04624#:~:text=parameters%2C">https://arxiv.org/abs/2402.04624#:~:text=parameters%2C</a> enabling the model to,also shows operational integrity without)[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/html/2410.15665v1#:~:text=we">https://arxiv.org/html/2410.15665v1#:~:text=we</a> hypothesize that AI models,We)。这类似于在线学习或<strong>代理的长期进化</strong>：模型的参数（或记忆池）不再固定，而是可以在使用过程中因新经验而变化。为了实现这一点，通常需要将模型分成“基础模型+扩展记忆”两部分，其中扩展部分支持快速更新而基础部分保持稳定，以免灾难性遗忘。例如MemoryLLM通过设计占模型相当比例的记忆参数，使模型可以<strong>局部更新</strong>这些参数来记住新知识[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.04624#:~:text=parameters%2C">https://arxiv.org/abs/2402.04624#:~:text=parameters%2C</a> enabling the model to,also shows operational integrity without)。GoodAI的长期记忆框架报告也提出，通过LTM支撑，智能体可以在推理阶段不断自我进化，逐步培养出个性化能力[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/html/2410.15665v1#:~:text=we">https://arxiv.org/html/2410.15665v1#:~:text=we</a> hypothesize that AI models,We)[arxiv.org](<a target="_blank" rel="noopener" href="https://arxiv.org/html/2410.15665v1#:~:text=data">https://arxiv.org/html/2410.15665v1#:~:text=data</a> systems required to facilitate,LTM is critical for the)。</li>
+</ol>
+<p>当前大模型动态记忆领域两种最主流范式：<strong>显式记忆池（例如：MemAgent） vs. 隐式参数空间记忆（例如：MEMORYLLM）</strong>，</p>
+<ol>
+<li><strong>记忆任务测试</strong>：这些任务包括：<ul>
+<li><strong>Memorization Task</strong>：事实始终位于输入的开始，问题位于末尾。</li>
+<li><strong>Detection &amp; Memorization Task</strong>：事实随机放置在输入中，要求模型首先识别事实，然后将其写入记忆，并在末尾回答问题。</li>
+<li><strong>Reasoning Task</strong>：两个事实随机放置在输入中，问题需要结合这两个事实来回答。</li>
+</ul>
+</li>
+</ol>
+<p>Ref-Long（Referencing Evaluation for Long-context Language Models），专门用于评估LCLMs的长文本引用能力，长文本引用是指LCLMs能够将感兴趣的项目正确地归因于长文档中特定部分的能力</p>
+<p>MemAgent: Reshaping Long-Context LLM with Multi-Conv RL-based Memory Agent</p>
+<p><img src="/./../images/image-20250709114509645.png" alt="image-20250709114509645"></p>
+<p>迭代式问答，将问题和当前片段以及上一次的文档片段的总结输入个模型，让模型输出新的总结，不断迭代最后得到答案。这篇论文基于 verl 框架实现了多轮对话的 <a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=259964008&content_type=Article&match_order=1&q=DAPO+%E7%AE%97%E6%B3%95&zhida_source=entity">DAPO 算法</a>训练，对于每条样本，策略模型需要多次采样生成多条阅读理解轨迹，然后对比输出结果与标准答案之间的匹配情况来计算奖励分数</p>
+<p>从 <a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=259964008&content_type=Article&match_order=1&q=HotpotQA&zhida_source=entity">HotpotQA</a> 与数据集中整理了三万多条样本（长文档、问题、答案），然后在 RL 环境中拆分为多轮交互：模型每轮接收“当前片段 + 问题 + 上一步记忆”，输出“更新的记忆”（最后一轮输出最终答案）；</p>
+<p>感觉这个方法只适合局部问题</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

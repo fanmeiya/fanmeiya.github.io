@@ -602,7 +602,7 @@ python manage.py migrate<span aria-hidden="true" class="line-numbers-rows"><span
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-18 11:14:16" itemprop="dateModified" datetime="2025-07-18T11:14:16+08:00">2025-07-18</time>
+      <time title="修改时间：2025-09-02 16:59:04" itemprop="dateModified" datetime="2025-09-02T16:59:04+08:00">2025-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -656,6 +656,53 @@ python manage.py migrate<span aria-hidden="true" class="line-numbers-rows"><span
 <li><p>提出LLM-w-Ref评估框架：<strong>结合细粒度推理和LLM-as-a-Judge机制</strong>：该框架利用MedThink-Bench中的专家精心策划的细粒度推理和LLM-as-a-Judge机制，结合了两者的优点。通过使用专家注释的推理轨迹来校准基于LLM的评估器，该框架可以准确地评估中间推理，以实现专家级的事实一致性，同时实现可扩展的评估。</p>
 </li>
 </ul>
+<p>HealthBench ：</p>
+<p>包含 5,000 条“多轮医疗对话”，模拟 AI 与用户或医护人员之间的互动。</p>
+<p><strong>评估机制</strong>：每条对话附有由 262 位医生构建的对话 Rubric，共计 48,562 条评分标准，对模型输出进行精细打分（如准确性、沟通技巧、安全性、是否避开不当技术术语等）。</p>
+<p><strong>重点考察</strong>：</p>
+<ul>
+<li>模型在开放式对话场景下的<strong>医疗推理与沟通能力</strong></li>
+<li>对话中的情境适应性、专业性与安全性</li>
+<li>针对急症情境、不确定信息、全球健康等多种医疗情境下的表现</li>
+</ul>
+<p><strong>评估方式</strong>：使用 GPT‑4.1 作为评分器自动判定模型是否满足各条 Rubric，并给出综合得分。</p>
+<p><strong>强调点</strong>：</p>
+<ul>
+<li><strong>情境真实性</strong>：通过对话体现临床真实互动，而非单问答形态</li>
+<li><strong>细粒度评估</strong>：Rubric 细致到每个点</li>
+<li><strong>开放领域</strong>：强调模型的对话表现、通用医疗能力</li>
+</ul>
+<p>Sequential Diagnosis Benchmark (SDBench)：</p>
+<p>为了更真实地模拟临床诊断过程，提出了Sequential Diagnosis Benchmark (SDBench)，这是一个将《新英格兰医学杂志》（NEJM）的304个具有挑战性的临床病理会议（CPC）病例转化为逐步诊断的交互式场景的框架。SDBench的主要特点包括：</p>
+<ul>
+<li><strong>逐步诊断过程</strong>：诊断者从简短的病例摘要开始，必须迭代地请求更多细节，并在每次获取新信息后权衡证据，最终做出诊断。</li>
+<li><strong>信息门控</strong>：通过一个名为<strong>Gatekeeper</strong>的代理模型，只有在明确查询时才揭示特定的临床发现。这避免了信息泄露，确保了诊断过程的现实性。</li>
+<li><strong>成本评估</strong>：不仅评估诊断的准确性，还计算所有请求的诊断测试的累积成本。即在可持续成本下提供高质量护理。</li>
+<li><strong>诊断准确性评估</strong>：通过一个名为<strong>Judge</strong>的代理模型，根据详细的临床标准评估诊断的准确性。这确保了诊断的临床相关性和实用性。</li>
+</ul>
+<p>AgentClinic：</p>
+<p>提出了一个多模态Agent基准，用于在模拟临床环境中评估LLM，包括患者互动、不完整信息下的多模态数据收集以及各种工具的使用。</p>
+<p>测试数据集：MedQA(30)，MIMIC-IV(300)，the New England Journal of Medicine (NEJM) case challenges(120).其中前两个数据集用于测试文本形式的交互，后一个加入了图片。</p>
+<p>用到的Agent：patient agent, doctor agent, measurement agent, moderator.</p>
+<p>评估流程：</p>
+<ol>
+<li><p>由doctor agent开始对话，patient agent基于Patient_Actor字段的知识进行回答，规定doctor agent提问的最大次数，一旦询问达到最大值即刻强制让doctor给出诊断。总之对话结束的条件是达到最大提问次数或者doctor自己给出诊断出的疾病结果。</p>
+</li>
+<li><p>当doctor agent 提出”REQUEST TEST”，则由measurement agen给出结果，如果医生请求的数据不在measurement agen已知的数据中，那么将返回”NORMAL READINGS”。</p>
+</li>
+<li><p>当对话结束后，moderator评估doctor诊断出的疾病是否和原始数据中的疾病一致，由此计算该doctor agent的准确率。</p>
+</li>
+<li><p>当需要测试doctor阅读图像的能力，论文中用了两种方式：一是在对话一开始就把图像输入给doctor，另一个是在对话中医生提出”REQUEST IMAGES”时再输入。</p>
+</li>
+</ol>
+<p>其他发现：</p>
+<ol>
+<li><p>向患者和医生模型引入偏见，以探究偏见是如何影响患者和医生模型的以至于影响到最后的诊断正确率。结果发现GPT-4 等模型表现出对认知和隐性偏差的恢复能力，保持了较高的诊断准确性，而 Mixtral-8x7B 等其他模型则出现了显着的性能下降。</p>
+<p>同时提出了三个指标（Confidence、Compliance、Consultation）以探究加入偏见的患者模型对当前咨询的满意度：</p>
+</li>
+</ol>
+<p>Confidence：患者对医生的信心。Compliance：患者依从性，表明自我报告愿意跟进治疗。Consultation：患者咨询评分，表示愿意再次咨询该医生。个人觉得这三项指标可以用到基准测试中评估doctor模型的对话质量。</p>
+<p>评估了六种agent工具的影响——Zero-Shot Chain-of-Thought (CoT), One-Shot CoT, Reflection CoT, Adaptive RAG (Book), Adaptive RAG (Web), and Notebook。</p>
 <h2 id="2、相关论文"><a href="#2、相关论文" class="headerlink" title="2、相关论文"></a>2、相关论文</h2><h3 id="2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"><a href="#2-1-HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM" class="headerlink" title="2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM"></a>2.1 HuatuoGPT-o1：这是一个能够进行复杂推理的医疗LLM</h3><p>通过以下几个步骤解决在大型语言模型（LLMs）中增强医疗领域复杂推理能力的问题：</p>
 <ol>
 <li>构建可验证的医疗问题</li>

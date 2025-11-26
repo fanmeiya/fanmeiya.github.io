@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -148,6 +148,118 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://fanmeiya.github.io/2025/11/26/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/%E5%A4%B4%E5%83%8F.jpg">
+      <meta itemprop="name" content="FMY">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FMY's blogs">
+      <meta itemprop="description" content="路漫漫其修远兮，吾将上下而求索 ">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FMY's blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/11/26/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-26 16:36:15" itemprop="dateCreated datePublished" datetime="2025-11-26T16:36:15+08:00">2025-11-26</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    <a title="" href="/2025/11/26/%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%E6%96%B9%E6%B3%95/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::e22881e3208aed36c6dc4ae82d588769" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>位置编码方法</p>
+<ol>
+<li>正弦，余弦编码方式：</li>
+</ol>
+<p>$PE(pos, 2i) &#x3D; \sin\left(\frac{pos}{10000^{2i&#x2F;d}}\right)$</p>
+<p>$PE(pos, 2i+1) &#x3D; \cos\left(\frac{pos}{10000^{2i&#x2F;d}}\right)$</p>
+<p>其中，pos是token在句子序列中的位置，d表示位置编码的总维度，2i 和2i+1 分别表示该pos的偶数和奇数维度。</p>
+<p>对于某个pos的某个维度来说，周期是2π⋅${10000^{2i&#x2F;d}}$，比如固定维度为0维，那么pos的周期就是2π，但是每个维度的周期又是递增的，所以理论上来说这个位置编码方式能表示比较多的位置。</p>
+<p>属于绝对位置编码，对token之间的相对位置捕捉不够直接</p>
+<ol start="2">
+<li><p>可学习的绝对位置编码</p>
+<p>类似于对token的embedding化那样，弄一个权重矩阵来学习每个位置的向量化，这样的化句子的长度一定是固定的，还可能过拟合。</p>
+</li>
+<li><p>旋转位置编码RoPE</p>
+</li>
+</ol>
+<p>属于相对位置编码，一般相对位置编码通过修改注意力机制来引入相对位置信息。目标是找到一种方法，使得查询（query）和键（key）的内积能够仅依赖于词嵌入和它们的相对位置，即：</p>
+<p>$&lt;f_q(x_m,m),f_k(x_n,n)&gt; &#x3D; g(s_m,x_n,m-n)$</p>
+<p>其中$f_q(x_m,m)$,$f_k(x_n,n)$分别表示处于m位置的$x_m$token向量对应的q向量和处于n位置的$x_n$token向量对应的k向量,&lt; , &gt;则表示点积。于是，作者在复数知识上找到对应的方法，先假定词嵌入的维度为2维，则满足如下等式：</p>
+<p>$f_q(x_m,m)&#x3D;(W_qx_m)e^(imθ),f_k(x_n,n)&#x3D;(W_kx_n)e^(inθ)$</p>
+<p><img src="D:\blogs\source\images\image-20251126161056006.png" alt="image-20251126161056006"></p>
+<p>具体推导过程可以参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/134085503">一文通透位置编码：从标准位置编码、复数、欧拉公式到旋转位置编码RoPE(含其推导与代码实现)-CSDN博客</a>，此时用于点积计算的q向量是先通过$W_q$和词向量乘积得到q向量再乘以旋转矩阵，同理k向量也是这么算的。</p>
+<p>由于先用的2维推导的，扩展成更高维度后，作者发现也可以，但还是两两为一组，即对于同一个pos邻近的两维共享一个角度$theta$。整体流程是：</p>
+<ul>
+<li>对于 token 序列中的每个词嵌入向量，首先计算其对应的 query 和 key 向量</li>
+<li>然后对每个 token 位置都计算对应的旋转位置编码</li>
+<li>接着对每个 token 位置的 query 和 key 向量的元素按照 两两一组 应用旋转变换</li>
+<li>最后再计算 query 和 key 之间的内积得到 self-attention 的计算结果</li>
+</ul>
+<p>该方法的优势是：不仅能够灵活处理不同长度的序列，还能够随着相对距离的增加而衰减词之间的依赖关系，能够更好地捕捉词之间的依赖关系。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -602,7 +714,7 @@ python manage.py migrate<span aria-hidden="true" class="line-numbers-rows"><span
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-02 16:59:04" itemprop="dateModified" datetime="2025-09-02T16:59:04+08:00">2025-09-02</time>
+      <time title="修改时间：2025-09-03 09:47:10" itemprop="dateModified" datetime="2025-09-03T09:47:10+08:00">2025-09-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -661,7 +773,7 @@ python manage.py migrate<span aria-hidden="true" class="line-numbers-rows"><span
 <p><strong>评估机制</strong>：每条对话附有由 262 位医生构建的对话 Rubric，共计 48,562 条评分标准，对模型输出进行精细打分（如准确性、沟通技巧、安全性、是否避开不当技术术语等）。</p>
 <p><strong>重点考察</strong>：</p>
 <ul>
-<li>模型在开放式对话场景下的<strong>医疗推理与沟通能力</strong></li>
+<li>模型在开放式对话场景下的医疗推理与沟通能力</li>
 <li>对话中的情境适应性、专业性与安全性</li>
 <li>针对急症情境、不确定信息、全球健康等多种医疗情境下的表现</li>
 </ul>
